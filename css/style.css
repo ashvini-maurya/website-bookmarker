@@ -77,3 +77,13 @@ body {
     border-bottom: 0;
   }
 }
+
+
+h5 {
+  text-align: left;
+  font-weight: bold;
+}
+
+.local-bookmarked {
+  clear: both;
+}

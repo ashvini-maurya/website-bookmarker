@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,18 +13,29 @@
 <body>
   <div class="container">
     <div class="jumbotron">
-    <h2>Bookmark your website</h2>
+    <h2>Bookmark your websites</h2>
     <form>
-      <input type="text" name="websiteName" placeholder="Website NAME">
-      <input type="text" name="websiteURL" placeholder="Website URL">
+      <div class="form-group">
+        <h5>Website Name</h5>
+        <input type="text" class="form-control" id="websiteName" placeholder="Website NAME">
+      </div>
+
+      <div class="form-group">
+        <h5>Website URL</h5>
+        <input type="text" class="form-control" id="websiteURL" placeholder="Website URL">
+      </div>
+
     </form>  
     <br>
-    <a class="btn btn-primary" href="#" role="button">Add website</a>
+    <a class="btn btn-primary" id="addWebsite" role="button" onclick="localStoreData()">Add website</a>
     </div>
-    <div class="row marketing">
-      <div class="col-lg-12">
-        <h4>saved websites</h4>
-        <h5>saved websites URL</h5>
+
+    <div class="jumbotron row bookmarked">
+      <div class="col-lg-12" id="storedWebsitesandURL">
+        <div class="local-bookmarked">
+          <h4 id="getWebsiteName" style="float: left"></h4>
+          <h4 id="getWebsiteUrl" style="float: right"></h4>
+        </div>  
       </div>
     </div>
   </div> <!-- /container -->
