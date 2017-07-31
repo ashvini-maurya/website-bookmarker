@@ -1,44 +1,86 @@
-function localStoreData(){
-	if (typeof(Storage) !== "undefined") {
-		if (localStorage.getItem === null) {
-			console.log("nothing in the localStorage");
-		}
-		else {
-			var websiteName = document.getElementById('websiteName').value;
-			var websiteURL = document.getElementById('websiteURL').value;
+document.getElementById('myForm').addEventListener('submit', saveBookmark);
 
-			var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-			var regex = new RegExp(expression);
+function saveBookmark(e) {
+	var siteName = document.getElementById('siteName').value;
+	var siteUrl = document.getElementById('siteUrl').value;	
 
-			if (websiteURL.match(regex) && websiteName !== "") {
-			  localStorage.setItem(websiteName, websiteURL);
-			} else {
-			  console.log("Please enter valid website Name and URL");
-			}			
-		}
+	if(!validateForm(siteName, siteUrl)){
+		return false;
 	}
-	else {
-		document.getElementById("getWebsiteName").innerHTML = "Sorry, your browser does not support Web Storage...";
+
+	var bookmark = {
+		name: siteName,
+		url: siteUrl
 	}
+
+	if(localStorage.getItem('bookmarks') === null) {
+		var bookmarks = [];
+		bookmarks.push(bookmark);
+		localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+	} else {
+		var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+		bookmarks.push(bookmark);
+		localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+	}
+
+	document.getElementById('myForm').reset();
+
+	fetchBookmarks();
+	
+	e.preventDefault();
 }
 
 
-function getLocalStoredData() {
-	localStoreData();
-	var localStoredWebsiteName = localStorage.getItem(websiteName);
-	var localStoredWebsiteURL = localStorage.getItem(websiteURL);
-	document.getElementById('getWebsiteName').innerHTML = '';
-	document.getElementById('getWebsiteUrl').innerHTML = '';
+function deleteBookmark(url) {
+	var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+	for (var i = 0; i < bookmarks.length; i++) {
+		if(bookmarks[i].url == url) {
+			bookmarks.splice(i, 1);
+		} 
+	}
+	localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
-	Object.keys(localStorage).forEach(function(x) { 
-		var name = document.createElement('h4');
-		var url = document.createElement('h4');
-		name.innerHTML = x;
-		url.innerHTML = localStorage[x];
-		document.getElementById('getWebsiteName').appendChild(name);
-		document.getElementById('getWebsiteUrl').appendChild(url);
-	})	
+	fetchBookmarks();
 }
 
-window.onload = getLocalStoredData;
-document.getElementById('addWebsite').onclick = getLocalStoredData;
+
+// function visitBookmark(url) {
+// 	document.getElementById("link").setAttribute("href",scrt_var);
+// }
+
+function fetchBookmarks() {
+	var bookmarks = JSON.parse(localStorage.getItem('bookmarks', JSON.stringify(bookmarks)));
+	// console.log(bookmarks[0].name);
+	var bookmarkResults = document.getElementById('bookmarkResults');
+	bookmarkResults.innerHTML = '';
+	for(var i = 0; i < bookmarks.length; i++){
+		var name = bookmarks[i].name;
+		var url = bookmarks[i].url;
+		// console.log(url);
+
+		bookmarkResults.innerHTML += '<div class="well">'+
+																 '<h3>'+name+
+																 ' <a class="btn btn-default" target="_blank" href="/'+url+'">Visit</a> ' +
+																 ' <a onclick="deleteBookmark(\''+url+'\')" class="btn btn-danger" href="#">Delete</a> ' + 
+																 '</h3>'+
+																 '</div>';
+	} 
+}
+
+
+function validateForm(siteName, siteUrl) {
+	if(!siteName || !siteUrl) {
+		alert('Fill form...');
+		return false;
+	}
+
+	var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+	var regex = new RegExp(expression);
+
+	if (!siteUrl.match(regex)){
+		alert('URL is not valid');
+		return false;
+	}
+
+	return true;
+}

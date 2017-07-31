@@ -4,50 +4,41 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Website Bookmarker</title>
-  <!-- Bootstrap core CSS -->
+  <title>Website Bookmarker - README Later</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body>
+<body onload="fetchBookmarks()">
   <div class="container">
     <div class="jumbotron">
-    <h2>Bookmark your websites</h2>
-    <form>
-      <div class="form-group">
-        <h5>Website Name</h5>
-        <input type="text" class="form-control" id="websiteName" placeholder="Website NAME">
-      </div>
-
-      <div class="form-group">
-        <h5>Website URL</h5>
-        <input type="text" class="form-control" id="websiteURL" placeholder="Website URL">
-      </div>
-
-    </form>
-    <br>
-    <a class="btn btn-primary" id="addWebsite" role="button">Add website</a>
+      <h2>Bookmark websites to read Later</h2>
+      <form id="myForm">
+        <div class="form-group">
+          <label>Site Name</label>
+          <input type="text" class="form-control" id="siteName" placeholder="Site Name">
+        </div>
+        <div class="form-group">
+          <label>Site URL</label>
+          <input type="text" class="form-control" id="siteUrl" placeholder="Site URL">
+        </div>
+        <button type="submit" class="btn btn-primary">Add website</button>
+      </form>  
     </div>
-
-    <div class="jumbotron row bookmarked">
-      <div class="col-lg-12" id="storedWebsitesandURL">
-        <h3 style="float: left">Website NAME</h3>
-        <h3 style="float: right">Website URL</h3>
-        <div class="local-bookmarked">
-          <h4 id="getWebsiteName" style="float: left"></h4>
-          <h4 id="getWebsiteUrl" style="float: right"></h4>
-          <div class="button"></div>
-        </div>  
+    
+    <div class="row marketing">
+      <div class="col-lg-12">
+        <div id="bookmarkResults"></div>
       </div>
     </div>
   </div> <!-- /container -->
 
   <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  <script type="text/javascript" src="js/main.js"></script>
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
 
 </body>
 </html>
